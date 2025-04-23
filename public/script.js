@@ -8,6 +8,13 @@ downloadBtn.addEventListener("click", () => {
   downloadBtn.style.display = "none";
 });
 
+async function getAPIHost() {
+  const res = await fetch("/api/ip");
+  const data = await res.json();
+  return `${data.ip}`;
+}
+
+
 contactForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -17,7 +24,7 @@ contactForm.addEventListener("submit", async (e) => {
     ciudad: inputs[2].value,
   };
 
-  ip_host = process.env.IP_HOST;
+  const ip_host = await getAPIHost();
 
   try {
     const res = await fetch(`http://${ip_host}:3001/api/contact`, {

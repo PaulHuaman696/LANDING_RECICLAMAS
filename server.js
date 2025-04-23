@@ -39,6 +39,10 @@ dotenv.config();
       res.status(500).json({ error: "Error al guardar los datos." });
     }
   });
+
+  app.get("/api/ip", (req, res) => {
+    res.json({ ip: process.env.IP_HOST || req.hostname });
+  });
   
   // Ruta por defecto: sirve index.html
   app.get("*", (req, res) => {
