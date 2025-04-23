@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const Contact = require("./src/models/Contact");
+const Contact = require("./src/models/contact");
 const path = require("path");
 
 dotenv.config();
