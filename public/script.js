@@ -17,8 +17,10 @@ contactForm.addEventListener("submit", async (e) => {
     ciudad: inputs[2].value,
   };
 
+  ip_host = process.env.IP_HOST;
+
   try {
-    const res = await fetch("http://localhost:3001/api/contact", {
+    const res = await fetch(`http://${ip_host}:3001/api/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
