@@ -1,3 +1,10 @@
+/* Regla global para asegurar que el padding y el borde no afecten el tamaño total de los elementos */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -85,6 +92,7 @@ input {
   border-radius: 8px;
   font-size: 1em;
   width: 100%;
+  margin-bottom: 12px;
 }
 
 .hidden {
@@ -156,3 +164,4 @@ input {
     padding: 8px;
   }
 }
+
