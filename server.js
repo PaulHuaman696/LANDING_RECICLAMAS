@@ -31,8 +31,15 @@ dotenv.config();
   app.use(express.static(path.join(__dirname, 'public')));
   
   app.post("/api/contact", async (req, res) => {
+    
+    const { nombre, correo, ciudad } = req.body;
+    
+    if (!nombre || !correo || !ciudad) {
+      return res.status(400).json({ message: "Faltan campos obligatorios." });
+    }
+
     try {
-      const contact = new Contact(req.body);
+      const contact = new Contact({ nombre, correo, ciudad });
       await contact.save();
       res.status(201).json({ message: "Formulario recibido y guardado." });
     } catch (error) {
@@ -40,16 +47,25 @@ dotenv.config();
     }
   });
 
-  app.get("/api/ip", (req, res) => {
-    res.json({ ip: process.env.IP_HOST || req.hostname });
-  });
+  if (process.env.NODE_ENV !== "production") {
+    app.get("/api/ip", (req, res) => {
+      res.json({ ip: process.env.IP_HOST || req.hostname });
+    });
+  }
   
   // Ruta por defecto: sirve index.html
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
   });
   
+  app.use((err, req, res, next) => {
+    console.error("Error no manejado:", err.stack); // Log interno
+    res.status(500).json({ message: "Error interno del servidor." }); // Respuesta genérica
+  });
+
   app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://${process.env.IP_HOST}:${PORT}`);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`Servidor corriendo en http://${process.env.IP_HOST}:${PORT}`);
+    }
   });
 })();
