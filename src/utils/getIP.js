@@ -9,11 +9,5 @@ async function getPublicIPAddress() {
     }
   }
   
-  async function logPublicIP() {
-    ip = await getPublicIPAddress()
-    console.log(ip);
-  }
-  
-  logPublicIP();
   
   module.exports = getPublicIPAddress;
